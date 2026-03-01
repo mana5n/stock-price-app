@@ -20,7 +20,7 @@ st.write (f"""
 ### 過去 **{days}日間** のGAFA株価
 """)
 
-# @st.cache
+@st.cache_data
 def get_data(days, tickers):
     df = pd.DataFrame()
     for company in tickers.keys():
@@ -44,7 +44,7 @@ ymin, ymax = st.sidebar.slider(
 
 tickers = {
     'apple': 'AAPL',
-    'facebook': 'FB',
+    'meta': 'META',
     'google': 'GOOGL',
     'microsoft': 'MSFT',
     'netflix': 'NFLX',
@@ -57,7 +57,7 @@ df, df_pivot = get_data(days, tickers)
 companies = st.multiselect(
     '会社名を選択してください。',
     list(df.columns), 
-    ['google', 'apple', 'facebook', 'amazon']
+    ['google', 'apple', 'meta', 'amazon']
 )
 
 if not companies:
@@ -76,4 +76,4 @@ else:
             color='Name:N'
         )
     )
-    st.altair_chart(chart, use_container_width=True)
+    st.altair_chart(chart, width='stretch')
